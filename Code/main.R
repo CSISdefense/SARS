@@ -5,7 +5,7 @@
 ## April, 2017
 ##
 
-source("./functions.R")
+source("functions.R")
 
 i <- 0
 filenames <- get_spreadsheet_names()
@@ -20,3 +20,4 @@ for (filename in filenames) {
     extract_and_save_data(filename)
     print("--------------------------------------")
 }
+

@@ -4,8 +4,8 @@
 ## TODO: Confidence is not always present?
 ##
 
-require(gdata)
-## require(xlsx)
+#require(gdata)
+require(xlsx)
 
 PROGRAM_NAME_TABLE_NUMBERS     <- c(2, 4, 5)
 COST_AND_FUNDING_TABLE_NUMBERS <- c(6, 13, 14, 17, 18, 19, 20, 22)
@@ -42,7 +42,8 @@ APPROPRIATION_COLUMN_COMBINATIONS <- list(
     c(1, 3, 1, 3, 2, 3, 2),  ## 7
     c(1, 2, 1, 2, 2, 2, 2),  ## 8, 12
     c(2, 3, 1, 3, 2, 3, 2),  ## 9, 11, 13
-    c(1, 3, 1, 3, 2, 2, 2)   ## 10
+    c(1, 3, 1, 3, 2, 2, 2),   ## 10
+    c(1, 3, 1, 3, 2, 4, 2)    ## 14
 )
 
 QUANTITY_COLUMN_COMBINATIONS <- list(
@@ -110,14 +111,15 @@ get_program_name <- function(table, table_number) {
 
 read_table <- function(filename, table_number) {
     ##
+
     ## Read table from spreadsheet file using the package that best suits you.
     ##
 
     ## Requires the `gdata` package.
-    table <- read.xls(filename, sheet = table_number, header = TRUE)
+    #table <- read.xls(filename, sheet = table_number, header = TRUE)
 
-    ## Requires the `xlsx` package.
-    ## table <- read.xlsx(filename, sheetIndex = table_number, header = TRUE)
+    # Requires the `xlsx` package.
+     table <- read.xlsx(filename, sheetIndex = table_number, header = TRUE)
 
     return(table)
 }
@@ -227,7 +229,7 @@ get_appropriation_data <- function(table) {
             ## Undefined columns selected due to combination
             dummy <- NULL
         })
-
+      
         if (!is.na(data) && test_correct_appropriation_data(data)) {
             print("Appropriation column differentials:")
             print(columns)
@@ -318,6 +320,7 @@ compute_quantity_columns <- function(combination) {
     ## the second element in each list corresponds to the same data structure as
     ## in the case of the "appropriation" table.
     ##
+  
     combination <- QUANTITY_COLUMN_COMBINATIONS[[combination]]
     columns <- rep(1, QUANTITY_COLUMN_UNITS)
     index <- 1
@@ -338,8 +341,11 @@ test_correct_appropriation_data <- function(data) {
     ## row is not valid.
     ##
     RDTE_row <- data[1, ]
+
     for (element in RDTE_row) {
-        if (as.character(element) == "" ||
+ 
+        if (is.na(element) || 
+            as.character(element) == "" ||
             as.character(element) == "NA") {
             return(FALSE)
         }
@@ -355,9 +361,11 @@ test_correct_quantity_data <- function(data) {
     for (row in 1:nrow(data)) {
         for (col in 1:ncol(data)) {
             if (col == 1) {
-                if (!(data[row, col] %in% c("RDT&E", "Procurement", "Total"))) {
+              
+              if (!(data[row, col] %in% c("RDT&E", "Procurement", "Total"))) {
                     return(FALSE)
-                }
+              }
+                
             } else {
                 if (is.na(as.numeric(as.character(data[row, col])))) {
                     return(FALSE)
