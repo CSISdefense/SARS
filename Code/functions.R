@@ -4,11 +4,11 @@
 ## TODO: Confidence is not always present?
 ##
 
-#require(gdata)
-require(xlsx)
+require(gdata)
+# require(xlsx)
 
 PROGRAM_NAME_TABLE_NUMBERS     <- c(2, 4, 5)
-COST_AND_FUNDING_TABLE_NUMBERS <- c(6, 13, 14, 17, 18, 19, 20, 22)
+COST_AND_FUNDING_TABLE_NUMBERS <- c(6, 13, 14, 15, 16, 17, 18, 19, 20, 21, 22, 24, 32, 34)
 
 APPROPIATION_ROW_UNITS    <- 11
 APPROPIATION_COLUMN_UNITS <- 8
@@ -42,8 +42,11 @@ APPROPRIATION_COLUMN_COMBINATIONS <- list(
     c(1, 3, 1, 3, 2, 3, 2),  ## 7
     c(1, 2, 1, 2, 2, 2, 2),  ## 8, 12
     c(2, 3, 1, 3, 2, 3, 2),  ## 9, 11, 13
-    c(1, 3, 1, 3, 2, 2, 2),   ## 10
-    c(1, 3, 1, 3, 2, 4, 2)    ## 14
+    c(1, 3, 1, 3, 2, 2, 2),  ## 10
+    c(1, 3, 1, 3, 2, 4, 2),  ## 14
+    c(2, 2, 1, 2, 2, 2, 2),  ## 35
+    c(1, 2, 1, 2, 2, 2, 1),
+    c(1, 3, 1, 3, 2, 3, 1)
 )
 
 QUANTITY_COLUMN_COMBINATIONS <- list(
@@ -53,6 +56,7 @@ QUANTITY_COLUMN_COMBINATIONS <- list(
     c(2, 4, 5),             ## 7
     c(3, 4, 5),             ## 9, 11, 13
     c(1, 1, 1),             ## 2, 10 (next sheet)
+    c(1, 2, 2),
     c(NA)                   ## 5, 8, 12  (ignored)
 )
 
@@ -116,10 +120,14 @@ read_table <- function(filename, table_number) {
     ##
 
     ## Requires the `gdata` package.
-    #table <- read.xls(filename, sheet = table_number, header = TRUE)
+    
+    # perl <- "C:/Perl/bin/perl5.24.1.exe"
+    
+    table <- read.xls(filename, sheet = table_number, header = TRUE,  perl = "C:/Perl/bin/perl5.24.1.exe")
 
     # Requires the `xlsx` package.
-     table <- read.xlsx(filename, sheetIndex = table_number, header = TRUE)
+
+     # table <- readWorksheet(filename, sheetIndex = table_number, header = TRUE)
 
     return(table)
 }
