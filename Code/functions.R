@@ -11,7 +11,7 @@ PROGRAM_NAME_TABLE_NUMBERS     <- c(2, 4, 5)
 COST_AND_FUNDING_TABLE_NUMBERS <- c(6, 13, 14, 15, 16, 17, 18, 19, 20, 21, 22, 24, 32, 34)
 
 APPROPIATION_ROW_UNITS    <- 11
-APPROPIATION_COLUMN_UNITS <- 8
+APPROPIATION_COLUMN_UNITS <- 9
 
 QUANTITY_ROW_UNITS    <- 3
 QUANTITY_COLUMN_UNITS <- 4
@@ -136,7 +136,7 @@ get_spreadsheet_names <- function() {
     ##
     ## Return the spreadsheet files in the "./files" subdirectory
     ##
-    return(paste("./files/", list.files(path = "./files/"), sep = ""))
+    return(paste("./files1/", list.files(path = "./files1/"), sep = ""))
 }
 
 extract_and_save_data <- function(filename) {
