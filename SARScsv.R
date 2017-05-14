@@ -1,5 +1,7 @@
 # Shivani Pandya
 #
+# Descriptions: outputs csv of relevant SARS fields 
+#
 # A text-mining package is required
 #
 library(tm)
@@ -102,4 +104,4 @@ df$mission <- missions
 df$program_name <- program_names
 df$DoD_component <- components
 
-write.csv(df, 'output.csv')
+write.csv(df, 'SARSoutput.csv')
